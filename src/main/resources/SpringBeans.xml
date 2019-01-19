@@ -1,0 +1,14 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <bean id="nodeBuilder" class="ru.aaromanov1985.telegrambots.simplebot.node.NodeBuilderImpl">
+        <property name="path" value="resources/Nodes.xml"/>
+    </bean>
+
+    <bean id="nodeHandler" class="ru.aaromanov1985.telegrambots.simplebot.node.NodeHandlerImpl">
+        <property name="nodeBuilder" ref="nodeBuilder"/>
+    </bean>
+
+</beans>
