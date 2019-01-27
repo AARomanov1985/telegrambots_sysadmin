@@ -11,4 +11,5 @@
         <property name="nodeBuilder" ref="nodeBuilder"/>
     </bean>
 
+    <bean id="bot" class="ru.aaromanov1985.telegrambots.simplebot.Bot"/>
 </beans>
