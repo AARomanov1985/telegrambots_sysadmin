@@ -12,6 +12,7 @@ public class SimpleBotApplication {
 				"SpringBeans.xml");
 
 		NodeHandlerImpl nodeHandler = context.getBean("nodeHandler", NodeHandlerImpl.class);
+		System.out.println("AAA");
 		nodeHandler.start();
 	}
 }
