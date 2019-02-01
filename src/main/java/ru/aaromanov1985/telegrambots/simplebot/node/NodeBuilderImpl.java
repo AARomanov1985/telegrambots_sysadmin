@@ -14,6 +14,7 @@ public class NodeBuilderImpl implements NodeBuilder {
     private String path;
 
     public Nodes buildNodes() {
+        LOG.info("path = {}", path);
         try {
             JAXBContext context =
                     JAXBContext.newInstance(Nodes.class);
