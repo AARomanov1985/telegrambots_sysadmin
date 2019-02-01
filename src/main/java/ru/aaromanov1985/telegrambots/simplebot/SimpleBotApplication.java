@@ -11,8 +11,7 @@ public class SimpleBotApplication {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"SpringBeans.xml");
 
-		NodeHandlerImpl nodeHandler = context.getBean("nodeHandler", NodeHandlerImpl.class);
-		System.out.println("AAA");
-		nodeHandler.start();
+		Bot bot = context.getBean("bot", Bot.class);
+		bot.execute();
 	}
 }
