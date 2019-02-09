@@ -2,12 +2,12 @@ package ru.aaromanov1985.telegrambots.simplebot;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.aaromanov1985.telegrambots.simplebot.node.NodeBuilderImpl;
-import ru.aaromanov1985.telegrambots.simplebot.node.NodeHandlerImpl;
+import org.telegram.telegrambots.ApiContextInitializer;
 
 public class SimpleBotApplication {
 
 	public static void main(String[] args) {
+		ApiContextInitializer.init();
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"SpringBeans.xml");
 
