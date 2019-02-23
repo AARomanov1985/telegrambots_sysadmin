@@ -5,12 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.api.methods.groupadministration.DeleteStickerSetName;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updates.DeleteWebhook;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 public class Bot extends TelegramLongPollingBot {
 
@@ -30,8 +28,7 @@ public class Bot extends TelegramLongPollingBot {
         try {
             botsApi.registerBot(this);
         } catch (TelegramApiException e) {
-            LOG.error(e.getMessage());
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
     }
 
@@ -49,7 +46,7 @@ public class Bot extends TelegramLongPollingBot {
             try {
                 execute(message); // Sending our message object to user
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                LOG.error(e.getMessage(), e);
             }
         }
     }
