@@ -8,9 +8,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 
-public class NodeBuilderImpl implements NodeBuilder {
+public class DefaultNodeBuilder implements NodeBuilder {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NodeBuilderImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DefaultNodeBuilder.class);
     private String path;
 
     public Nodes buildNodes() {
