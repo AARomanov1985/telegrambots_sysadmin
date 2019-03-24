@@ -5,12 +5,22 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 
-@XmlType(propOrder = {"code", "message", "variants"}, name = "node")
+@XmlType(propOrder = {"code", "message", "type", "nextNode", "variants"}, name = "node")
 public class Node {
 
     private String code;
     private String message;
+    private String type;
+    private String nextNode;
     private List<Variant> variants;
+
+    public String getNextNode() {
+        return nextNode;
+    }
+
+    public void setNextNode(String nextNode) {
+        this.nextNode = nextNode;
+    }
 
     public String getCode() {
         return code;
@@ -36,5 +46,13 @@ public class Node {
 
     public void setVariants(List<Variant> variants) {
         this.variants = variants;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

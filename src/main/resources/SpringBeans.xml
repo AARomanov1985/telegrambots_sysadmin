@@ -15,5 +15,5 @@
 
     <bean id="nodeService" class="ru.aaromanov1985.telegrambots.simplebot.service.DefaultNodeService"/>
 
-    <bean id="bot" class="ru.aaromanov1985.telegrambots.simplebot.Bot"/>
+    <bean id="bot" class="ru.aaromanov1985.telegrambots.simplebot.bot.DefaultBot"/>
 </beans>
