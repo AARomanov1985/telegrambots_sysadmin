@@ -45,10 +45,13 @@ public class DefaultNodeService implements NodeService {
 
     @Override
     public Node getAnswer(Node currentNode, String request) {
+        LOG.debug("getAnswer for node {} and request {}", currentNode.getCode(), request);
         List<Variant> variants = currentNode.getVariants();
         if (CollectionUtils.isNotEmpty(variants)) {
             for (Variant variant : variants) {
                 if (request.equals(variant.getValue())) {
+                    Node nodeForCode = findNodeForCode(variant.getTarget());
+                    LOG.debug("Found Node: {}", nodeForCode);
                     return findNodeForCode(variant.getTarget());
                 }
             }
@@ -59,8 +62,10 @@ public class DefaultNodeService implements NodeService {
 
     @Override
     public Node findNodeForCode(String nodeCode) {
+        LOG.debug("Find node for code {}",nodeCode);
         for (Node node : nodes.getNodes()) {
             if (node.getCode().equals(nodeCode)) {
+                LOG.debug("Found Node: {}", node.getCode());
                 return node;
             }
         }
@@ -82,6 +87,11 @@ public class DefaultNodeService implements NodeService {
 
     @Override
     public boolean isStartNode(Node node) {
-        return node == null || node.getCode().equals(START_NODE);
+        return node != null && node.getCode().equals(START_NODE);
+    }
+
+    @Override
+    public boolean isEndNode(Node node){
+        return node != null && END_NODE.equals(node.getCode());
     }
 }
