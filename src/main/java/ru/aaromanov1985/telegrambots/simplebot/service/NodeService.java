@@ -19,4 +19,6 @@ public interface NodeService {
     boolean isErrorNode(Node node);
 
     boolean isStartNode(Node node);
+
+    boolean isEndNode(Node node);
 }
