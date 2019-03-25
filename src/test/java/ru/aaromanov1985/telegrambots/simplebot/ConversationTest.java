@@ -2,8 +2,7 @@ package ru.aaromanov1985.telegrambots.simplebot;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import ru.aaromanov1985.telegrambots.simplebot.conversation.Conversation;
 
 // TODO
 class ConversationTest {

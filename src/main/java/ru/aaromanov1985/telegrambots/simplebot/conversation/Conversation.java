@@ -1,12 +1,15 @@
-package ru.aaromanov1985.telegrambots.simplebot;
+package ru.aaromanov1985.telegrambots.simplebot.conversation;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.aaromanov1985.telegrambots.simplebot.Answer;
 import ru.aaromanov1985.telegrambots.simplebot.node.Node;
+import ru.aaromanov1985.telegrambots.simplebot.node.Variant;
 import ru.aaromanov1985.telegrambots.simplebot.service.NodeService;
 
-import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Conversation {
@@ -31,7 +34,7 @@ public class Conversation {
         init();
 
         LOG.debug("id= {}", id);
-        LOG.debug("currentNode= {}", currentNode);
+        LOG.debug("currentNode= {}", currentNode.getCode());
         LOG.debug("isActive= {}", isActive);
         LOG.debug("nodeService= {}", nodeService);
     }
@@ -42,33 +45,50 @@ public class Conversation {
         isFirstRequest = true;
     }
 
-    public String execute(String message) {
+    public Answer execute(String message) {
         LOG.debug("execute conversation for message {}", message);
         lastRequest = System.currentTimeMillis();
 
-        return getAnswer(message);
+        Node node = getAnswer(message);
+        Answer answer = new Answer(String.valueOf(id));
+        answer.setMessage(node.getMessage());
+        answer.setNextNode(currentNode.getNextNode());
+        answer.setVariants(convertVariants(node.getVariants()));
+        return answer;
+    }
+    
+    private List<String> convertVariants(List<Variant> variants){
+        List<String> variantsOfAnswers = new ArrayList<>();
+        if (CollectionUtils.isNotEmpty(variants)){
+            for (Variant variant : variants){
+                variantsOfAnswers.add(variant.getValue());
+            }
+        }
+        return variantsOfAnswers;
     }
 
-    private String getAnswer(String request) {
+    private Node getAnswer(String request) {
 
-        if (nodeService.isEndNode(currentNode)){
+        if (nodeService.isEndNode(currentNode) || nodeService.isErrorNode(currentNode)){
             init();
         }
 
         if (isFirstRequest) {
             isFirstRequest = false;
-            return currentNode.getMessage();
+            return currentNode;
         }
 
         Node node = nodeService.getAnswer(currentNode, request);
 
         if (nodeService.isErrorNode(node)) {
             LOG.error("It's error node!");
-            return INCORRECT_REQUEST;
+            Node errNode = nodeService.getErrorNode();
+            errNode.setMessage(INCORRECT_REQUEST);
+            return errNode;
         }
 
         updateCurrentNode(node);
-        return node.getMessage();
+        return node;
     }
 
     private void updateCurrentNode(Node node) {
